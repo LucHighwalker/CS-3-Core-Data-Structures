@@ -1,5 +1,6 @@
 #!python
 
+import math
 import string
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
 # string.digits is '0123456789'
@@ -17,11 +18,11 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    
+
     flippydoos = []
     for digit in digits:
         flippydoos.append(string.printable.find(digit))
-    
+
     flippydoos = flippydoos[::-1]
 
     result = 0
@@ -45,12 +46,26 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
-    # ...
-    # TODO: Encode number in hexadecimal (base 16)
-    # ...
-    # TODO: Encode number in any base (2 up to 36)
-    # ...
+
+    num = number
+    power = 0
+    while num / base >= 1:
+        num /= base
+        power += 1
+
+    num = number
+    max_power = power + 1
+    encoded = []
+    while len(encoded) < max_power:
+        if num >= base ** power:
+            index = math.floor(num / (base ** power))
+            encoded.append(string.printable[index])
+            num -= index * (base ** power)
+        else:
+            encoded.append('0')
+        power -= 1
+
+    return ''.join(encoded)
 
 
 def convert(digits, base1, base2):
@@ -76,6 +91,7 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
+    print(encode(4200, 16))
     # decode('def', 16)
     # decode('053def', 16)
     # decode('a502', 16)
