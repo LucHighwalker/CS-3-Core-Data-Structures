@@ -10,11 +10,13 @@ def decode(digits, base):
     base: int -- base of given number
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
-    assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+    assert 2 <= base <= 94, 'base is out of range: {}'.format(base)
+
+    symbols = getSymbols(base)
 
     flippydoos = []
     for digit in digits:
-        flippydoos.append(string.printable.find(digit))
+        flippydoos.append(symbols.find(digit))
 
     flippydoos = flippydoos[::-1]
 
@@ -36,9 +38,11 @@ def encode(number, base):
     base: int -- base to convert to
     return: str -- string representation of number (in given base)"""
     # Handle up to base 36 [0-9a-z]
-    assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+    assert 2 <= base <= 94, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
+
+    symbols = getSymbols(base)
 
     num = number
     power = 0
@@ -52,7 +56,7 @@ def encode(number, base):
     while len(encoded) < max_power:
         if num >= base ** power:
             index = math.floor(num / (base ** power))
-            encoded.append(string.printable[index])
+            encoded.append(symbols[index])
             num -= index * (base ** power)
         else:
             encoded.append('0')
@@ -68,12 +72,22 @@ def convert(digits, base1, base2):
     base2: int -- base to convert to
     return: str -- string representation of number (in base2)"""
     # Handle up to base 36 [0-9a-z]
-    assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
-    assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
+    assert 2 <= base1 <= 94, 'base1 is out of range: {}'.format(base1)
+    assert 2 <= base2 <= 94, 'base2 is out of range: {}'.format(base2)
 
     decoded = decode(digits, base1)
     converted = encode(decoded, base2)
     return converted
+
+def getSymbols(base):
+    if base <= 62:
+        set = string.digits + string.ascii_lowercase + string.ascii_uppercase
+    elif base == 64:
+        set = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+    else:
+        set = string.printable
+
+    return set[:base]
 
 
 def main():
@@ -84,6 +98,7 @@ def main():
         digits = args[0]
         base1 = int(args[1])
         base2 = int(args[2])
+
         # Convert given digits between bases
         result = convert(digits, base1, base2)
         print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
