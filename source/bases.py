@@ -21,13 +21,11 @@ def decode(digits, base):
     flippydoos = flippydoos[::-1]
 
     result = 0
-    power = 0
-    for flippy in flippydoos:
+    for power, flippy in enumerate(flippydoos):
         if power == 0:
             result += flippy
         else:
             result += flippy * (base ** power)
-        power += 1
 
     return result
 
