@@ -78,9 +78,8 @@ def convert(digits, base1, base2):
     return converted
 
 def getSymbols(base):
-    if base <= 62:
-        set = string.digits + string.ascii_lowercase + string.ascii_uppercase
-    elif base == 64:
+    """Gets the necessary symbols for encoding/decoding"""
+    if base == 64:
         set = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
     else:
         set = string.printable

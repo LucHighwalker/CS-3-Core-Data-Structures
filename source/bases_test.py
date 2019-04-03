@@ -52,6 +52,21 @@ class BasesDecodeTest(unittest.TestCase):
         assert decode('deadbeef', 16) == 3735928559
         assert decode('f007ba11', 16) == 4027038225
 
+    def test_decode_base64(self):
+        assert decode('th/s', 64) == 11935724
+        assert decode('i5', 64) == 2233
+        assert decode('pr37ty', 64) == 44759497586
+        assert decode('C00l', 64) == 740645
+        assert decode('bu+', 64) == 113598
+        assert decode('I', 64) == 8
+        assert decode('r34LLy', 64) == 47108371186
+        assert decode('h4tE', 64) == 8883012
+        assert decode('p30PLe', 64) == 44959855326
+        assert decode('w40', 64) == 200244
+        assert decode('Wr/tE', 64) == 380631876
+        assert decode('LIk3', 64) == 2918711
+        assert decode('7hI5', 64) == 15602233
+
     def test_decode_10(self):
         assert decode('10', 2) == 2
         assert decode('10', 4) == 4
