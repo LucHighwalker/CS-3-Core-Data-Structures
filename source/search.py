@@ -34,13 +34,29 @@ def binary_search(array, item):
     """return the index of item in sorted array or None if item is not found"""
     # implement binary_search_iterative and binary_search_recursive below, then
     # change this to call your implementation to verify it passes all tests
-    # return binary_search_iterative(array, item)
-    return binary_search_recursive(array, item)
+    return binary_search_iterative(array, item)
+    # return binary_search_recursive(array, item)
 
 
 def binary_search_iterative(array, item):
     # TODO: implement binary search iteratively here
-    pass
+    left = 0
+    right = len(array) - 1
+    while left != right:
+        if array[left] == item:
+            return left
+        elif array[right] == item:
+            return right
+        else:
+            index = (left + right) / 2
+            index = int(round(index))
+            if array[index] == item:
+                return index
+            elif item < array[index]:
+                right = index - 1
+            elif item > array[index]:
+                left = index + 1
+    return None
     # once implemented, change binary_search to call binary_search_iterative
     # to verify that your iterative implementation passes all tests
 
@@ -57,7 +73,7 @@ def binary_search_recursive(array, item, left=None, right=None):
     if array[index] == item:
         return index
     elif left == right:
-        return None
+        return None # not found
     elif item < array[index]:
         return binary_search_recursive(array, item, left, index - 1)
     elif item > array[index]:
