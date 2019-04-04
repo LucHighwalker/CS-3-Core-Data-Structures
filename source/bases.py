@@ -14,6 +14,9 @@ def decode(digits, base):
 
     symbols = getSymbols(base)
 
+    if base <= 16:
+        digits = digits.lower()
+
     flippydoos = []
     for digit in digits:
         flippydoos.append(symbols.find(digit))
@@ -96,9 +99,13 @@ def main():
         base1 = int(args[1])
         base2 = int(args[2])
 
-        # Convert given digits between bases
-        result = convert(digits, base1, base2)
-        print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
+
+        if base1 == base2:
+            print('nice try, it\'s still just {}'.format(digits))
+        else:
+            # Convert given digits between bases
+            result = convert(digits, base1, base2)
+            print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
     else:
         print('Usage: {} digits base1 base2'.format(sys.argv[0]))
         print('Converts digits from base1 to base2')
