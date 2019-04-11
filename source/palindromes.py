@@ -14,21 +14,27 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
-    return is_palindrome_iterative(text)
-    # return is_palindrome_recursive(text)
+    clean_text = re.sub('[^a-z]', '', text.lower())
+    # return is_palindrome_iterative(clean_text)
+    return is_palindrome_recursive(clean_text)
 
 
 def is_palindrome_iterative(text):
     # TODO: implement the is_palindrome function iteratively here
-    clean_text = re.sub('[^a-z]', '', text.lower())
-    return clean_text == clean_text[::-1]
+    return text == text[::-1]
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
 
 
-def is_palindrome_recursive(text, left=None, right=None):
+def is_palindrome_recursive(text, left=0, right=-1):
     # TODO: implement the is_palindrome function recursively here
-    pass
+    if left > len(text) + right:
+        return True
+
+    if text[left] == text[right]:
+        return is_palindrome_recursive(text, left + 1, right - 1)
+    else:
+        return False
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
 
