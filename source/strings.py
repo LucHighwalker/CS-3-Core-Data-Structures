@@ -53,8 +53,6 @@ def find_index(text, pattern):
 
 
 def find_index_recursive(text, pattern, text_index=0, patt_index=0, found=[]):
-    print("trying to find {} in {}\n\tfound: {}\n\ttext index: {}\n\tpatt index: {}".format(
-        pattern, text, found, text_index, patt_index))
     # if indeces fall out of range, pattern does not exist
     if text_index >= len(text) or patt_index >= len(pattern):
         return None
@@ -84,6 +82,42 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    if pattern == '':
+        return list(range(0, len(text)))
+
+    low_text = text.lower()
+    low_pattern = pattern.lower()
+    return find_all_indexes_recursive(low_text, low_pattern, 0, 0, [], [])
+
+
+def find_all_indexes_recursive(text, pattern, text_index=0, patt_index=0, found=[], found_indexes=[]):
+    # if indeces fall out of range, pattern does not exist
+    if text_index >= len(text) or patt_index >= len(pattern):
+        return found_indexes
+
+    # check if current text at t-index is equal to pattern at p-index
+    if text[text_index] == pattern[patt_index]:
+        found.append(text[text_index])
+        patt_index += 1
+    # if not, check if text at t-index is qual to pattern at 0 index
+    elif text[text_index] == pattern[0]:
+        found = [text[text_index]]
+        patt_index = 1
+    else:                               # otherwise, reset found array and pattern index
+        found = []
+        patt_index = 0
+
+    # if the found array matches the pattern, the pattern has been found!!
+    if ''.join(found) == pattern:
+        found_indexes.append(text_index - len(pattern) + 1)
+        if found [-1] == pattern[0] and len(pattern) > 1: # overlap edge case workaround
+            found = [pattern[0]]
+            patt_index = 1
+        else:
+            found = []
+            patt_index = 0
+        
+    return find_all_indexes_recursive(text, pattern, text_index + 1, patt_index, found, found_indexes)
 
 
 def test_string_algorithms(text, pattern):
