@@ -1,10 +1,41 @@
 #!python
 
+
 def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
+    if pattern == '':
+        return True
+
+    low_text = text.lower()
+    low_pattern = pattern.lower()
+    return contains_recursive(low_text, low_pattern, 0, 0, [])
+
+
+def contains_recursive(text, pattern, text_index=0, patt_index=0, found=[]):
+    # if indeces fall out of range, pattern does not exist
+    if text_index >= len(text) or patt_index >= len(pattern):
+        return False
+
+    # check if current text at t-index is equal to pattern at p-index
+    if text[text_index] == pattern[patt_index]:
+        found.append(text[text_index])
+        patt_index += 1
+    # if not, check if text at t-index is qual to pattern at 0 index
+    elif text[text_index] == pattern[0]:
+        found = [text[text_index]]
+        patt_index = 1
+    else:                               # otherwise, reset found array and pattern index
+        found = []
+        patt_index = 0
+
+    # if the found array matches the pattern, the pattern has been found!!
+    if ''.join(found) == pattern:
+        return True
+    else:  # otherwise, do a recursive call
+        return contains_recursive(text, pattern, text_index + 1, patt_index, found)
 
 
 def find_index(text, pattern):
@@ -13,6 +44,38 @@ def find_index(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
+    if pattern == '':
+        return 0
+
+    low_text = text.lower()
+    low_pattern = pattern.lower()
+    return find_index_recursive(low_text, low_pattern, 0, 0, [])
+
+
+def find_index_recursive(text, pattern, text_index=0, patt_index=0, found=[]):
+    print("trying to find {} in {}\n\tfound: {}\n\ttext index: {}\n\tpatt index: {}".format(
+        pattern, text, found, text_index, patt_index))
+    # if indeces fall out of range, pattern does not exist
+    if text_index >= len(text) or patt_index >= len(pattern):
+        return None
+
+    # check if current text at t-index is equal to pattern at p-index
+    if text[text_index] == pattern[patt_index]:
+        found.append(text[text_index])
+        patt_index += 1
+    # if not, check if text at t-index is qual to pattern at 0 index
+    elif text[text_index] == pattern[0]:
+        found = [text[text_index]]
+        patt_index = 1
+    else:                               # otherwise, reset found array and pattern index
+        found = []
+        patt_index = 0
+
+    # if the found array matches the pattern, the pattern has been found!!
+    if ''.join(found) == pattern:
+        return text_index - len(pattern) + 1
+    else:  # otherwise, do a recursive call
+        return find_index_recursive(text, pattern, text_index + 1, patt_index, found)
 
 
 def find_all_indexes(text, pattern):
