@@ -70,7 +70,7 @@ class LinkedList(object):
         # Now node_count contains the number of nodes
         return node_count
 
-    def get_at_index(self, index):
+    def get_at_index(self, index, cur_index=0, node=None):
         """Return the item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
         Best case running time: ??? under what conditions? [TODO]
@@ -79,6 +79,17 @@ class LinkedList(object):
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
+
+        if self.is_empty():
+            return None
+
+        if node is None:
+            node = self.head
+
+        if cur_index < index:
+            return self.get_at_index(index, cur_index + 1, node.next)
+        else:
+            return node.data
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -102,8 +113,9 @@ class LinkedList(object):
         else:
             # Otherwise insert new node after tail
             self.tail.next = new_node
-        # Update tail to new node regardless
+        # Update size and tail to new node regardless
         self.tail = new_node
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -117,8 +129,9 @@ class LinkedList(object):
         else:
             # Otherwise insert new node before head
             new_node.next = self.head
-        # Update head to new node regardless
+        # Update size and head to new node regardless
         self.head = new_node
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -189,6 +202,9 @@ class LinkedList(object):
                     previous.next = None
                 # Update tail to the previous node regardless
                 self.tail = previous
+
+            # update size
+            self.size -= 1
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))
