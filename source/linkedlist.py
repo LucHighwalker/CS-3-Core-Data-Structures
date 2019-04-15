@@ -1,5 +1,6 @@
 #!python
 
+
 class Node(object):
 
     def __init__(self, data):
@@ -70,12 +71,25 @@ class LinkedList(object):
         # Now node_count contains the number of nodes
         return node_count
 
-    def get_at_index(self, index, cur_index=0, node=None):
+    def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
+        if not (0 <= index < self.size):
+            raise ValueError('List index out of range: {}'.format(index))
+        # TODO: Find the node at the given index and return its data
+
+        node = self.find_by_index(index)
+
+        if node is not None:
+            return node.data
+        else:
+            return None
+
+    def find_by_index(self, index, cur_index=0, node=None):
+        """Returns a node at index"""
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node at the given index and return its data
@@ -87,9 +101,9 @@ class LinkedList(object):
             node = self.head
 
         if cur_index < index:
-            return self.get_at_index(index, cur_index + 1, node.next)
+            return self.find_by_index(index, cur_index + 1, node.next)
         else:
-            return node.data
+            return node
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -100,6 +114,28 @@ class LinkedList(object):
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
         # TODO: Find the node before the given index and insert item after it
+
+        new_node = Node(item)
+
+        if self.is_empty():
+            self.head = new_node
+            self.tail = new_node
+
+        elif self.size > index > 0:
+            prev_node = self.find_by_index(index - 1)
+            next_node = prev_node.next
+            new_node.next = next_node
+            prev_node.next = new_node
+
+        elif index == self.size:
+            self.tail.next = new_node
+            self.tail = new_node
+
+        else: # if index == 0
+            new_node.next = self.head
+            self.head = new_node
+
+        self.size += 1
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
