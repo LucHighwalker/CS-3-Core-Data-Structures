@@ -105,6 +105,23 @@ class LinkedList(object):
         else:
             return node
 
+    def find_by_item(self, item, node=None):
+        """Returns a node with item"""
+
+        if self.is_empty():
+            return None
+
+        if node == self.tail and node.data != item:
+            return None
+
+        if node is None:
+            node = self.head
+
+        if node.data != item:
+            return self.find_by_item(item, node.next)
+        else:
+            return node
+
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
@@ -194,7 +211,12 @@ class LinkedList(object):
         Worst case running time: ??? under what conditions? [TODO]"""
         # TODO: Find the node containing the given old_item and replace its
         # data with new_item, without creating a new node object
-        pass
+        node = self.find_by_item(old_item)
+
+        if node is not None:
+            node.data = new_item
+        else:
+            raise ValueError('Item not found: {}'.format(old_item))
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.

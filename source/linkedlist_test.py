@@ -106,76 +106,76 @@ class LinkedListTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             ll.insert_at_index(-1, 'Y')  # index too low
 
-    # def test_append(self):
-    #     ll = LinkedList()
-    #     ll.append('A')
-    #     assert ll.head.data == 'A'  # new head
-    #     assert ll.tail.data == 'A'  # new tail
-    #     assert ll.size == 1
-    #     ll.append('B')
-    #     assert ll.head.data == 'A'  # unchanged
-    #     assert ll.tail.data == 'B'  # new tail
-    #     assert ll.size == 2
-    #     ll.append('C')
-    #     assert ll.head.data == 'A'  # unchanged
-    #     assert ll.tail.data == 'C'  # new tail
-    #     assert ll.size == 3
+    def test_append(self):
+        ll = LinkedList()
+        ll.append('A')
+        assert ll.head.data == 'A'  # new head
+        assert ll.tail.data == 'A'  # new tail
+        assert ll.size == 1
+        ll.append('B')
+        assert ll.head.data == 'A'  # unchanged
+        assert ll.tail.data == 'B'  # new tail
+        assert ll.size == 2
+        ll.append('C')
+        assert ll.head.data == 'A'  # unchanged
+        assert ll.tail.data == 'C'  # new tail
+        assert ll.size == 3
 
-    # def test_prepend(self):
-    #     ll = LinkedList()
-    #     ll.prepend('C')
-    #     assert ll.head.data == 'C'  # new head
-    #     assert ll.tail.data == 'C'  # new head
-    #     assert ll.size == 1
-    #     ll.prepend('B')
-    #     assert ll.head.data == 'B'  # new head
-    #     assert ll.tail.data == 'C'  # unchanged
-    #     assert ll.size == 2
-    #     ll.prepend('A')
-    #     assert ll.head.data == 'A'  # new head
-    #     assert ll.tail.data == 'C'  # unchanged
-    #     assert ll.size == 3
+    def test_prepend(self):
+        ll = LinkedList()
+        ll.prepend('C')
+        assert ll.head.data == 'C'  # new head
+        assert ll.tail.data == 'C'  # new head
+        assert ll.size == 1
+        ll.prepend('B')
+        assert ll.head.data == 'B'  # new head
+        assert ll.tail.data == 'C'  # unchanged
+        assert ll.size == 2
+        ll.prepend('A')
+        assert ll.head.data == 'A'  # new head
+        assert ll.tail.data == 'C'  # unchanged
+        assert ll.size == 3
 
-    # def test_find(self):
-    #     ll = LinkedList(['A', 'B', 'C'])
-    #     assert ll.find(lambda item: item == 'B') == 'B'
-    #     assert ll.find(lambda item: item < 'B') == 'A'
-    #     assert ll.find(lambda item: item > 'B') == 'C'
-    #     assert ll.find(lambda item: item == 'X') is None
+    def test_find(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        assert ll.find(lambda item: item == 'B') == 'B'
+        assert ll.find(lambda item: item < 'B') == 'A'
+        assert ll.find(lambda item: item > 'B') == 'C'
+        assert ll.find(lambda item: item == 'X') is None
 
-    # def test_replace(self):
-    #     ll = LinkedList(['A', 'B', 'C'])
-    #     ll.replace('A', 'D')
-    #     assert ll.head.data == 'D'  # new head
-    #     assert ll.tail.data == 'C'  # unchanged
-    #     assert ll.size == 3
-    #     ll.replace('B', 'E')
-    #     assert ll.head.data == 'D'  # unchanged
-    #     assert ll.tail.data == 'C'  # unchanged
-    #     assert ll.size == 3
-    #     ll.replace('C', 'F')
-    #     assert ll.head.data == 'D'  # unchanged
-    #     assert ll.tail.data == 'F'  # new tail
-    #     assert ll.size == 3
-    #     with self.assertRaises(ValueError):
-    #         ll.replace('X', 'Y')  # item not in list
+    def test_replace(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        ll.replace('A', 'D')
+        assert ll.head.data == 'D'  # new head
+        assert ll.tail.data == 'C'  # unchanged
+        assert ll.size == 3
+        ll.replace('B', 'E')
+        assert ll.head.data == 'D'  # unchanged
+        assert ll.tail.data == 'C'  # unchanged
+        assert ll.size == 3
+        ll.replace('C', 'F')
+        assert ll.head.data == 'D'  # unchanged
+        assert ll.tail.data == 'F'  # new tail
+        assert ll.size == 3
+        with self.assertRaises(ValueError):
+            ll.replace('X', 'Y')  # item not in list
 
-    # def test_delete(self):
-    #     ll = LinkedList(['A', 'B', 'C'])
-    #     ll.delete('A')
-    #     assert ll.head.data == 'B'  # new head
-    #     assert ll.tail.data == 'C'  # unchanged
-    #     assert ll.size == 2
-    #     ll.delete('C')
-    #     assert ll.head.data == 'B'  # unchanged
-    #     assert ll.tail.data == 'B'  # new tail
-    #     assert ll.size == 1
-    #     ll.delete('B')
-    #     assert ll.head is None  # new head
-    #     assert ll.tail is None  # new head
-    #     assert ll.size == 0
-    #     with self.assertRaises(ValueError):
-    #         ll.delete('X')  # item not in list
+    def test_delete(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        ll.delete('A')
+        assert ll.head.data == 'B'  # new head
+        assert ll.tail.data == 'C'  # unchanged
+        assert ll.size == 2
+        ll.delete('C')
+        assert ll.head.data == 'B'  # unchanged
+        assert ll.tail.data == 'B'  # new tail
+        assert ll.size == 1
+        ll.delete('B')
+        assert ll.head is None  # new head
+        assert ll.tail is None  # new head
+        assert ll.size == 0
+        with self.assertRaises(ValueError):
+            ll.delete('X')  # item not in list
 
 
 if __name__ == '__main__':
