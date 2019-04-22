@@ -101,8 +101,9 @@ class HashTable(object):
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
-        Best and worst case running time: O(n) because it goes through the 
-        entire bucket to check if it exists"""
+        Best case running time: O(n) because it goes through the 
+        entire bucket to check if it exists
+        Worst case running time: O(2n) if it has to resize"""
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
         bucket = self.buckets[index]
@@ -125,8 +126,9 @@ class HashTable(object):
 
     def delete(self, key):
         """Delete the given key and its associated value, or raise KeyError.
-        Best and worst case running time: O(n) because it goes through the 
-        entire bucket to check if it exists"""
+        Best case running time: O(n) because it goes through the 
+        entire bucket to check if it exists
+        Worst case running time: O(2n) if it has to resize"""
         # Find the bucket the given key belongs in
         index = self._bucket_index(key)
         bucket = self.buckets[index]
@@ -148,8 +150,8 @@ class HashTable(object):
         """Resize this hash table's buckets and rehash all key-value entries.
         Should be called automatically when load factor exceeds a threshold
         such as 0.75 after an insertion (when set is called with a new key).
-        Best and worst case running time: ??? under what conditions? [TODO]
-        Best and worst case space usage: ??? what uses this memory? [TODO]"""
+        Best and worst case running time: O(2n) it has to go through all the buckets and reassign all of the entries
+        Best and worst case space usage: ∞ there is nothing specifying its maximum memory usage."""
         # If unspecified, choose new size dynamically based on current size
         if new_size is None:
             new_size = len(self.buckets) * 2  # Double size
