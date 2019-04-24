@@ -169,8 +169,8 @@ class HashTable(object):
         # which will rehash them into a new bucket index based on the new size
         self.size = 0
         self.table_size = new_size
-        for item in entries:
-            self.set(item[0], item[1])
+        for key, val in entries:
+            self.set(key, val)
 
 
 def test_hash_table():
