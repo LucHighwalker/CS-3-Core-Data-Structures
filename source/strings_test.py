@@ -17,6 +17,9 @@ class StringsTest(unittest.TestCase):
         assert contains('abc', 'abc') is True  # all strings contain themselves
         assert contains('aaa', 'a') is True  # multiple occurrences
         assert contains('aaa', 'aa') is True  # overlapping pattern
+        assert contains('abra', '') == True  # no pattern
+        with self.assertRaises(AssertionError, msg='pattern is not a string: abra'):
+            contains('abra', 123) # number pattern
         # TODO: Write more positive test cases with assert is True statements
         # ...
 
@@ -74,6 +77,9 @@ class StringsTest(unittest.TestCase):
         assert find_index('abcabcdabcde', 'abcd') == 3  # multiple occurrences, overlapping prefix
         assert find_index('abra cadabra', 'abra') == 0  # multiple occurrences
         assert find_index('abra cadabra', 'adab') == 6  # overlapping prefix
+        assert find_index('abra', '') == 0  # no pattern
+        with self.assertRaises(AssertionError, msg='pattern is not a string: abra'):
+            find_index('abra', 123)  # number pattern
         # TODO: Write more test cases that check complex patterns or edge cases
         # You'll need a lot more than this to test your algorithm's robustness
         # ...
@@ -98,6 +104,9 @@ class StringsTest(unittest.TestCase):
         assert find_all_indexes('abc', 'ac') == []  # important to test close cases
         assert find_all_indexes('abc', 'az') == []  # first letter, but not last
         assert find_all_indexes('abc', 'abz') == []  # first 2 letters, but not last
+        assert find_all_indexes('abc', '') == [0, 1, 2]  # no pattern
+        with self.assertRaises(AssertionError, msg='pattern is not a string: abc'):
+            find_all_indexes('abc', 123)  # number pattern
         # TODO: Write more negative test cases with assert equal list statements
         # ...
 
@@ -112,7 +121,10 @@ class StringsTest(unittest.TestCase):
         assert find_all_indexes('abcabcdabcde', 'abcde') == [7]  # overlapping prefix
         assert find_all_indexes('abcabcdabcde', 'abcd') == [3, 7]  # multiple occurrences, overlapping prefix
         assert find_all_indexes('abra cadabra', 'abra') == [0, 8]  # multiple occurrences
-        assert find_all_indexes('abra cadabra', 'adab') == [6]  # overlapping prefix
+        assert find_all_indexes('abra cadabra', 'adab') == [6]  # overlapping 
+        assert find_all_indexes('abra', '') == [0, 1, 2, 3]  # no pattern
+        with self.assertRaises(AssertionError, msg='pattern is not a string: abra'):
+            find_all_indexes('abra', 123)  # number pattern
         # TODO: Write more test cases that check complex patterns or edge cases
         # You'll need a lot more than this to test your algorithm's robustness
         # ...
