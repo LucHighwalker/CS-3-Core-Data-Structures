@@ -42,3 +42,31 @@ class Set(object):
         for element in set:
             new_set.add(element)
         return new_set
+
+    def difference(self, other):
+        diff = Set()
+        for element in other:
+            if element not in self:
+                diff.add(element)
+        return diff
+
+    def is_subset(self, other):
+        if len(self) > len(other):
+            return False
+        else:
+            for element in self:
+                if element not in other:
+                    return False
+            return True
+
+    def intersection(self, other):
+        intersect = Set()
+        if len(self) > other:
+            for element in other:
+                if element in self:
+                    intersect.add(element)
+        else:
+            for element in self:
+                if element in other:
+                    intersect.add(element)
+        return intersect
