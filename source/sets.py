@@ -5,10 +5,11 @@ class Set(object):
 
     def __init__(self, elements=None):
         self.table = HashTable()
+        self.size = 0
 
         if elements is not None:
             for element in elements:
-                self.table.set(element, None)
+                self.add(element)
 
     def __str__(self):
         items = ['{!r}'.format(element) for element in self]
@@ -21,7 +22,7 @@ class Set(object):
         return self.contains(item)
 
     def __len__(self):
-        return self.table.size
+        return self.size
 
     def __iter__(self):
         elements = self.table.keys()
@@ -30,9 +31,11 @@ class Set(object):
 
     def add(self, element):
         self.table.set(element, None)
+        self.size = self.table.length()
 
     def remove(self, element):
         self.table.delete(element)
+        self.size = self.table.length()
 
     def contains(self, element):
         return self.table.contains(element)
@@ -70,3 +73,12 @@ class Set(object):
                 if element in other:
                     intersect.add(element)
         return intersect
+
+
+# def main():
+#     st = Set(['A', 'B', 'C'])
+#     print(st)
+#     print('size: {}'.format(st.size))
+
+# if __name__ == '__main__':
+#     main()
