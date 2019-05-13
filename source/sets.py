@@ -48,6 +48,9 @@ class Set(object):
 
     def difference(self, other):
         diff = Set()
+        for element in self:
+            if element not in other:
+                diff.add(element)
         for element in other:
             if element not in self:
                 diff.add(element)
@@ -75,10 +78,15 @@ class Set(object):
         return intersect
 
 
-# def main():
-#     st = Set(['A', 'B', 'C'])
-#     print(st)
-#     print('size: {}'.format(st.size))
+def main():
+    # st = Set(['A', 'B', 'C'])
+    # print(st)
+    # print('size: {}'.format(st.size))
 
-# if __name__ == '__main__':
-#     main()
+    st = Set(['A', 'B', 'C', 'D', 'E'])
+    other_st = Set(['A', 'B', 'C', 'F', 'G'])
+    difference = st.difference(other_st)
+    print(difference)
+
+if __name__ == '__main__':
+    main()
